@@ -1,4 +1,5 @@
 import tensorflow as tf
+import tensorflow_addons as tfa
 
 # batch de train y val deben ser iguales
 
@@ -16,7 +17,7 @@ def dataset(path_data, batch_size=None, img_h=228, img_w=228):
     counter = tf.data.Dataset.counter()
     train_ds = tf.data.Dataset.zip((train_ds, (counter, counter)))
     train_ds = (train_ds
-        .map(augment, num_parallel_calls=tf.data.AUTOTUNE)
+        .map(data_augmentation, num_parallel_calls=tf.data.AUTOTUNE)
         .batch(32)
         .prefetch(tf.data.AUTOTUNE))
     val_ds = configure_for_performance(val_ds).batch(32)
@@ -29,13 +30,15 @@ def normalize_img(img, label):
     img = img / 255.0
     return img, label
 
-def augment(image_label, seed):
+def data_augmentation(image_label, seed):
     img, label = image_label
     new_seed = tf.random.experimental.stateless_split(seed, num=1)[0, :]
-    #img = tf.image.resize_with_crop_or_pad(img, 228, 228)
     img = tf.image.stateless_random_flip_left_right(img, seed=new_seed)
     img = tf.image.stateless_random_flip_up_down(img, seed=new_seed)
     img = tf.image.stateless_random_crop(value=img, size=[180, 180, 3], seed=seed)
+    random_angle = tf.random.stateless_uniform([], seed=new_seed, minval=0.2617993877991494, maxval=6.021385919380436, dtype=tf.dtypes.float32, alg='auto_select')
+    img = tfa.image.rotate(img, angles=random_angle) 
+
     return img, label
 
 def configure_for_performance(ds):
