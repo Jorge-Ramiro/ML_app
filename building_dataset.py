@@ -1,7 +1,6 @@
 import tensorflow as tf
 import tensorflow_addons as tfa
 
-# batch de train y val deben ser iguales
 
 def dataset(path_data, batch_size=None, img_h=228, img_w=228):
     train_ds, val_ds = tf.keras.utils.image_dataset_from_directory(
@@ -37,7 +36,7 @@ def data_augmentation(image_label, seed):
     img = tf.image.stateless_random_flip_up_down(img, seed=new_seed)
     img = tf.image.stateless_random_crop(value=img, size=[180, 180, 3], seed=seed)
     random_angle = tf.random.stateless_uniform([], seed=new_seed, minval=0.2617993877991494, maxval=6.021385919380436, dtype=tf.dtypes.float32, alg='auto_select')
-    img = tfa.image.rotate(img, angles=random_angle) 
+    img = tfa.image.rotate(img, angles=random_angle)
 
     return img, label
 
