@@ -62,7 +62,7 @@ def upload_file(file_path, folder_id="1aaUczscHtbG68VRSgZR5VkF9pR1nB_JW"):
         file_metadata = {
             'name': title,
             'parents': [folder_id]}
-        media = MediaFileUpload(title, resumable=True)
+        media = MediaFileUpload(file_path, resumable=True)
         # pylint: disable=maybe-no-member
         file = service.files().create(body=file_metadata, media_body=media,
                                         fields='id').execute()
