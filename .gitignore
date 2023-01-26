@@ -476,3 +476,6 @@ junit/
 
 # YAML Files
 *.yaml
+
+# datos
+D_data/
