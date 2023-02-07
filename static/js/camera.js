@@ -4,17 +4,17 @@ $(document).ready(function () {
   var canvas = document.getElementById("canvas");
   var ctx = canvas.getContext("2d", { willReadFrequently: true });
   var currentStream = null;
-  var modelo = null;
-  document.getElementById("predict").onclick = function () {
-    modelo = "start";
+  var get_image = null;
+  document.getElementById("start_predicting").onclick = function () {
+    get_image = "start";
   };
-  document.getElementById("stop_predict").onclick = function () {
-    modelo = "stop";
+  document.getElementById("stop_predicting").onclick = function () {
+    get_image = "stop";
   };
 
   window.onload = function () {
     showcamera();
-      setInterval(predecir, 2500) // se corre cada 2.5 s
+    setInterval(sendimage, 2500) // se corre cada 2.5 s
   };
 
   function showcamera() {
@@ -31,7 +31,7 @@ $(document).ready(function () {
         .then(function (stream) {
           currentStream = stream;
           video.srcObject = currentStream;
-          procesarcamara();
+          processcamera();
         })
         .catch(function (err) {
           alert("No se pudo utilizar la camara :(");
@@ -42,16 +42,15 @@ $(document).ready(function () {
       alert("No existe la función getUserMedia");
     }
   }
-  function procesarcamara() {
+  function processcamera() {
     ctx.drawImage(video, 0, 0, size, size, 0, 0, size, size);
-    setTimeout(procesarcamara, 10);
+    setTimeout(processcamera, 10);
   }
-  function predecir() {
-    console.log("La función fue llamada")
-    var objetivo = document.getElementById("raza");
-    if (modelo == "start") {
-      resample_single(canvas, 229, 229, otrocanvas);
-      var ctx2 = otrocanvas.getContext("2d", { willReadFrequently: true });
+  function sendimage() {
+    var objetivo = document.getElementById("name_breeds");
+    if (get_image == "start") {
+      resample_single(canvas, 229, 229, othercanvas);
+      var ctx2 = othercanvas.getContext("2d", { willReadFrequently: true });
       var imgData = ctx2.getImageData(0, 0, 229, 229);
       // hacer el arreglo
       var arr = [];
