@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clasificador de razas de perrros</title>
+    <link rel="stylesheet" href="static/css/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;600&display=swap" rel="stylesh">
+    <script src="https://kit.fontawesome.com/9a87bfdd8c.js" crossorigin="anonymous"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+    <script src="static/js/utils.js"></script>
+  </head>
+
+  <body>
+    <div id="cameras">
+      <video id="video" playsinline autoplay style="width: 1px"></video>
+      <canvas
+        id="canvas"
+        width="400"
+        height="400"
+      ></canvas>
+      <canvas id="othercanvas" width="299" height="299" style="display: none"></canvas>
+      <div id="text">
+        <h1 id="name_breeds"></h1>
+      </div>
+    </div>
+    <div id="buttons">
+      <button id="start_predicting" type="button">Iniciar predicciones :)</button>
+      <button id="stop_predicting" type="button">Dejar de predecir :(</button>
+    </div>
+    </body>
+</html>
